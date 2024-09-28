@@ -55,7 +55,7 @@ if music_type == "Hollywood":
     similarity = pickle.load(open('data/similarity.pkl','rb'))  
 else:
     # music = pickle.load(open('data/bolly_df.pkl','rb'))
-    file_path = 'data/bolly_df.pkl'
+    file_path = 'data/df.pkl'
     try:
         with open(file_path, 'rb') as file:
             music = pickle.load(file)

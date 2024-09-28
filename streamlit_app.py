@@ -43,11 +43,11 @@ st.header('Music Recommender System')
 
 music_type = st.selectbox('Select Music Category', {"Hollywood","Bollywood"})
 if music_type == "Hollywood":
-    music = pickle.load(open('df.pkl','rb'))
-    similarity = pickle.load(open('similarity.pkl','rb'))  
+    music = pickle.load(open('data/df.pkl','rb'))
+    similarity = pickle.load(open('data/similarity.pkl','rb'))  
 else:
-    music = pickle.load(open('bolly_df.pkl','rb'))
-    similarity = pickle.load(open('bolly_similarity.pkl','rb'))
+    music = pickle.load(open('data/bolly_df.pkl','rb'))
+    similarity = pickle.load(open('data/bolly_similarity.pkl','rb'))
 
 music_list = music['song'].values
 

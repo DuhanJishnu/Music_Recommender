@@ -40,26 +40,29 @@ def recommend(song):
     return recommended_music_names,recommended_music_posters
 
 st.header('Music Recommender System')
-
-music_type = st.selectbox('Select Music Category', {"Hollywood","Bollywood"})
+music_type = st.selectbox('Select Music Category', {"Hollywood","Bollywood"}, index =1 )
 if music_type == "Hollywood":
-    music = pickle.load(open('data/df.pkl','rb'))
+    # music = pickle.load(open('data/df.pkl','rb'))
+    file_path = 'data/bolly_df.pkl'
+    try:
+        with open(file_path, 'rb') as file:
+            music = pickle.load(file)
+    except FileNotFoundError:
+        print(f"File not found: {file_path}")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
     similarity = pickle.load(open('data/similarity.pkl','rb'))  
 else:
     music = pickle.load(open('data/bolly_df.pkl','rb'))
     similarity = pickle.load(open('data/bolly_similarity.pkl','rb'))
 
+
 music_list = music['song'].values
-
-search_query = st.text_input("Search for a Song:")
-filtered_options = [option for option in music_list if search_query.lower() in option.lower()]
-
-if filtered_options:
-    selected_music = st.selectbox('Select a Song from List', filtered_options,index=3)
-    st.write(f'You selected: {selected_music}')
-else:
-    st.write('No matching Songs found.')
-
+selected_music = st.selectbox(
+    "Type or select a song from the dropdown",
+    music_list, index = 3
+)
 
 if st.button('Show Recommendation'):
     recommended_music_names,recommended_music_posters = recommend(selected_music)

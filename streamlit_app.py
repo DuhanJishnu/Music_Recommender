@@ -42,7 +42,19 @@ def recommend(song):
 st.header('Music Recommender System')
 music_type = st.selectbox('Select Music Category', {"Hollywood","Bollywood"}, index =1 )
 if music_type == "Hollywood":
-    # music = pickle.load(open('data/df.pkl','rb'))
+    file_path = 'data/df.pkl'
+    try:
+        with open(file_path, 'rb') as file:
+            music = pickle.load(file)
+    except FileNotFoundError:
+        print(f"File not found: {file_path}")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+    
+    file_path = 'data/similarity.pkl'
+    with open(file_path,'rb') as file:
+        similarity = pickle.load(file)
+else:
     file_path = 'data/bolly_df.pkl'
     try:
         with open(file_path, 'rb') as file:
@@ -52,18 +64,9 @@ if music_type == "Hollywood":
     except Exception as e:
         print(f"An error occurred: {e}")
 
-    similarity = pickle.load(open('data/similarity.pkl','rb'))  
-else:
-    # music = pickle.load(open('data/bolly_df.pkl','rb'))
-    file_path = 'data/df.pkl'
-    try:
-        with open(file_path, 'rb') as file:
-            music = pickle.load(file)
-    except FileNotFoundError:
-        print(f"File not found: {file_path}")
-    except Exception as e:
-        print(f"An error occurred: {e}")
-    similarity = pickle.load(open('data/bolly_similarity.pkl','rb'))
+    file_path = 'data/bolly_similarity.pkl'
+    with open(file_path,'rb') as file:
+        similarity = pickle.load(file)
 
 
 music_list = music['song'].values
